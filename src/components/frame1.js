@@ -35,7 +35,7 @@ const Frame1=()=>{
     },[])
     return(
 
-                <Grid container  className={'container1'} style={isPortrait?{backgroundImage: "url("+`${frame1mobile}`+")",}:
+                <Grid container  className={'container1'} style={isPortrait?{backgroundImage: "url("+`${frame1mobile}`+")",height:'min-content'}:
                     {backgroundImage: "url("+`${frame1}`+")",overflow:'hidden',height:'min-content'}} justify="center"  alignItems={'center'}  >
                     <Grid className={'overlay'}   item container justify={'center'}>
                         {!isPortrait?<Nav/>:<div style={{width:'100%'}} >

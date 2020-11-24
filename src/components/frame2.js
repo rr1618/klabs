@@ -15,7 +15,7 @@ const Frame2 = ()=>{
         Aos.init({duration: 1000})
     }, [])
     return(
-        <Grid container style={isPortrait?{height:'min-content',backgroundImage: "url("+`${anuradhasvg}`+")"}:
+        <Grid container style={isPortrait?{height:'min-content',overflow:'hidden',backgroundImage: "url("+`${anuradhasvg}`+")"}:
             {height:'350vh',overflow:'hidden',backgroundRepeat:'no-repeat',backgroundImage: "url("+`${anuradhasvg}`+")",backgroundPosition:'-20px 0px'}} justify={"space-around"}  >
             <Grid item xs={10} lg={5}>
                 <img src={fiftypercent} height={200} alt=""/>
@@ -31,7 +31,7 @@ const Frame2 = ()=>{
                     of learning.</h3>
             </Grid>
 
-            <Grid item container style={{position:'relative',top:-100,left:200}}>
+            <Grid item container style={isPortrait?{position:'static'}:{position:'relative',top:-100,left:200}}>
                 <Grid item lg={5} xs={12}>
                     <img src={mampic} height={300} alt=""/>
                 </Grid>
