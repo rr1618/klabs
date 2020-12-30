@@ -27,9 +27,15 @@ const mapStyles = {
                 <p>{lat}</p>
                 <p>{lng}</p>
                 {lat&&lng?
-                    <img src={`https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=14&size=400x300&sensor=false&markers=color:red%7C${lat},${lng}&key=AIzaSyDrWa8gCLbJQ9vu4Uru29gy47YqKoEJD44`} alt=""/>
+                    <img src={`https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap
+&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318
+&markers=color:red%7Clabel:C%7C40.718217,-73.998284
+&key=AIzaSyDrWa8gCLbJQ9vu4Uru29gy47YqKoEJD44`} alt=""/>
                 :
-                    <img src={`http://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=13&size=200x200&maptype=roadmap&markers=0.0000,0.0000&sensor=false`} alt=""/>}
+                    <img src={`https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap
+&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318
+&markers=color:red%7Clabel:C%7C40.718217,-73.998284
+&key=AIzaSyDrWa8gCLbJQ9vu4Uru29gy47YqKoEJD44`} alt=""/>}
             </div>
         );
 
