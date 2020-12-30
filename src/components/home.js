@@ -1,60 +1,39 @@
-import React, {useContext, useEffect} from "react";
-import {FormSelectContext,RegisterContext} from "../App";
-import {
-    Link,
-    Element,
-} from "react-scroll";
-import Frame1 from "./frame1";
-import Frame2 from "./frame2";
-import Frame3 from "./frame3";
-import Frame4 from "./frame4";
-import Frame5 from "./frame5";
-import About from "./about";
-import CardSlider from "./cardslider";
-const Home = () =>
-{
-    const {form,setForm} =useContext(FormSelectContext)
-    const {register,setRegister} = useContext(RegisterContext)
-    useEffect(()=>{
-        setRegister({...register,
-            name:'',
-            mobile:'',
-            school:'',
-            email:'',
-            date:'',
-            slot:'',
-            order_id:'',
-            payment:false
-        })
-        setForm(0)
-    },[])
-    return(
-        <React.Fragment>
-
-                <Element
-                    name="home" className="element">
-                    <Frame1/>
-
-                    <Frame2/>
+import React, {useEffect, useState} from 'react';
 
 
-                    {/*<Frame3/>*/}
-                </Element>
+const mapStyles = {
+    width: '100%',
+    height: '60%'
+};
 
-                {/*<Element name="whykalam" className="element">*/}
-                {/*    <Frame4/>*/}
-                {/*</Element>*/}
-                {/*<Element name="people" className="element">*/}
-                {/*    <Frame5/>*/}
-                {/*</Element>*/}
-                {/*<Element name="about" className="element">*/}
-                {/*    <About/>*/}
-                {/*</Element>*/}
+ const Home=(props)=> {
+    const [lat,setLat]=useState(null)
+    const [lng,setLng]=useState(null)
+    const getLocation=()=> {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(getCoordinates);
+        }
+    }
+    const getCoordinates=(position)=>{
+        setLat(position.coords.latitude)
+        setLng(position.coords.longitude)
+    }
 
 
 
+        return (
+            <div>
+                <button onClick={getLocation}>get coordinates</button>
+                <p>{lat}</p>
+                <p>{lng}</p>
+                {lat&&lng?
+                    <img src={`https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=14&size=400x300&sensor=false&markers=color:red%7C${lat},${lng}&key=AIzaSyDrWa8gCLbJQ9vu4Uru29gy47YqKoEJD44`} alt=""/>
+                :
+                    <img src={`http://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=13&size=200x200&maptype=roadmap&markers=0.0000,0.0000&sensor=false`} alt=""/>}
+            </div>
+        );
 
-        </React.Fragment>
-    )
 }
+
 export default Home
+
