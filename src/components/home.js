@@ -48,9 +48,10 @@ export const Home =(props)=>{
                 setLat(position.coords.latitude)
                 setLng(position.coords.longitude)
                 API.reverseGeocode(position.coords.latitude,position.coords.longitude).then(res=>{
+                    console.log(res.data)
 
-                    data = res.data.data[0]
-                    setAddress({country: data.country,state:data.region,city:data.county,country_code: data.country_code })
+                    data = res.data.results[0].components
+                    setAddress({country: data.country,state:data.state,city:data.city,country_code: data.country_code })
                     API.weathers(position.coords.latitude,position.coords.longitude).then(res=> {
 
                             setCurrWeather({icon:`http://openweathermap.org/img/wn/${res.data.current.weather[0].icon}@2x.png`,

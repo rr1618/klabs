@@ -1,6 +1,6 @@
 
 import axios from "axios";
-
+// https://api.opencagedata.com/geocode/v1/json?q=25%2C+85&key=8817c0ae0d9845a0ab914e95ac3f9a01&pretty=1
 
 export default class API {
     static async reverseGeocode(lat,lng) {
@@ -9,11 +9,9 @@ export default class API {
             query: `${lat},${lng}`
         }
         let res = await axios.
-        get("http://api.positionstack.com/v1/reverse",
+        get(`https://api.opencagedata.com/geocode/v1/json?q=${lat}%2C+${lng}&key=8817c0ae0d9845a0ab914e95ac3f9a01&pretty=1`,
 
-            {
-                params
-            }
+
         );
         return res
     }
