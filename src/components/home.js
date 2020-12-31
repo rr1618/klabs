@@ -58,7 +58,7 @@ export const Home =(props)=>{
                     currency = res.data.results[0].annotations.currency.iso_code
                     setAddress({country: data.country,
                         state:data.state,
-                        city:data.city,
+                        city:data.county,
                         country_code: data.country_code,
                          })
                     API.weathers(position.coords.latitude,position.coords.longitude).then(res=> {
@@ -164,7 +164,7 @@ export const Home =(props)=>{
                 </Grid>
                 <Grid item container xs={12} lg={6} justify={"center"}>
                     <Grid item xs={12}>
-                        <Map google={props.google} zoom={14} style={isPortrait?{width:'95vw',height: 300}:{width:500,height:300}}
+                        <Map google={props.google} zoom={18} style={isPortrait?{width:'95vw',height: 300}:{width:500,height:300}}
                              center={{
                                  lat: lat,
                                  lng: lng
