@@ -37,8 +37,8 @@ export const Home =(props)=>{
     const convert=(time)=>{
         let date = new Date(time*1000);
         let da = date.toDateString();
-        console.log(time)
-        return da
+
+        return da.slice(0,10)
     }
     useEffect(()=>{
         let data
@@ -72,7 +72,7 @@ export const Home =(props)=>{
 
                         API.exchange_rate(currency).then(res=>
                         {
-                            console.log(res.data)
+
                             let keys
                             for(keys in res.data.rates)
                             {
@@ -99,10 +99,10 @@ export const Home =(props)=>{
                     <Grid item xs={12}>
                         <h2>{address.city},{address.state}</h2>
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={10} lg={2}>
                         <img src={currWeather.icon}  alt=""/>
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={10} lg={2}>
                         <h2>{currWeather.temp-273.15} °C</h2>
                     </Grid>
                     <Grid item xs={11}>
