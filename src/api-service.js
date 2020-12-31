@@ -35,9 +35,14 @@ export default class API {
         return res
     }
     static async exchange_rate_day_before(currency_code){
-
-        let res_usd = await axios.get(`https://api.exchangeratesapi.io/history?start_at=2020-12-30&end_at=2020-12-31&base=USD&symbols=${currency_code}`);
-        let res_eur = await axios.get(`https://api.exchangeratesapi.io/history?start_at=2020-12-30&end_at=2020-12-31&base=EUR&symbols=${currency_code}`);
+        let iso_today,iso_yesterday
+        const timeElapsed = Date.now();
+        const today = new Date(timeElapsed)
+        iso_today  = today.toISOString().slice(0,10)
+        const yesterday = new Date(timeElapsed- 864e5)
+        iso_yesterday  = yesterday.toISOString().slice(0,10)
+        let res_usd = await axios.get(`https://api.exchangeratesapi.io/history?start_at=${iso_yesterday}&end_at=${iso_today}&base=USD&symbols=${currency_code}`);
+        let res_eur = await axios.get(`https://api.exchangeratesapi.io/history?start_at=${iso_yesterday}&end_at=${iso_today}&base=EUR&symbols=${currency_code}`);
         let change1,data1,col1='green',sign1='+',diff
         data1 = res_usd.data.rates
         diff = (data1[Object.keys(data1)[0]].INR -data1[Object.keys(data1)[1]].INR)/data1[Object.keys(data1)[1]].INR
