@@ -4,14 +4,7 @@ import axios from "axios";
 
 export default class API {
     static async reverseGeocode(lat,lng) {
-        const params = {
-            access_key: 'ed4d9c782201a1cad205d9177d205534',
-            query: `${lat},${lng}`
-        }
-        let res = await axios.
-        get(`https://api.opencagedata.com/geocode/v1/json?q=${lat}%2C+${lng}&key=8817c0ae0d9845a0ab914e95ac3f9a01&pretty=1`,
-
-
+        let res = await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${lat}%2C+${lng}&key=8817c0ae0d9845a0ab914e95ac3f9a01&pretty=1`,
         );
         return res
     }
@@ -66,6 +59,6 @@ export default class API {
             col2='red'
         }
 
-        return {usd:change1,col_usd:col1,eur:change2,col_eur:col2}
+        return {usd:change1,sign1:sign1,col_usd:col1,sign2:sign2,eur:change2,col_eur:col2}
     }
 }

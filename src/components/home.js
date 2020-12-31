@@ -52,8 +52,6 @@ export const Home =(props)=>{
                 setLat(position.coords.latitude)
                 setLng(position.coords.longitude)
                 API.reverseGeocode(position.coords.latitude,position.coords.longitude).then(res=>{
-                    console.log(res.data)
-
                     data = res.data.results[0].components
                     currency = res.data.results[0].annotations.currency.iso_code
                     setAddress({country: data.country,
@@ -62,31 +60,20 @@ export const Home =(props)=>{
                         country_code: data.country_code,
                          })
                     API.weathers(position.coords.latitude,position.coords.longitude).then(res=> {
-
                             setCurrWeather({icon:`http://openweathermap.org/img/wn/${res.data.current.weather[0].icon}@2x.png`,
                             temp:res.data.current.temp})
-
                         setForecast(res.data.daily.slice(0,3))
-
                         })
                         API.currency_code(data.country_code).then(res=>{
-
                             setCurr_code(res.data.currencies[0].code)
-
                         API.exchange_rate_usd(currency).then(res=>
                         {
-
                             let keys
                             for(keys in res.data.rates)
                             {
-
                                 setPrice_usd(Math.round(res.data.rates[keys]*10000)/10000)
                             }
-
-
                         }
-
-
                         )
                             API.exchange_rate_eur(currency).then(res=>
                         {
@@ -94,17 +81,13 @@ export const Home =(props)=>{
                             let keys
                             for(keys in res.data.rates)
                             {
-
                                 setPrice_eur(Math.round(res.data.rates[keys]*10000)/10000)
                             }
-
-
                         }
-
-
                         )
                         API.exchange_rate_day_before(currency).then(res=>{setChange(res
-                            )})})
+                            )})
+                            .catch(error=>console.log(error))})
 
                 }).catch(error=>console.log(error))
 
