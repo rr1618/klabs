@@ -25,7 +25,7 @@ export const Home =(props)=>{
     const [lng,setLng]=useState(0)
     const [show,setShow]=useState(false)
     const [currWeather,setCurrWeather]=useState({temp:'',icon:''})
-    const [address,setAddress] = useState({country:'',state:'',city:'',country_code:''})
+    const [address,setAddress] = useState({country:'',state:'',city:'',country_code:'',currency_code:''})
     const [price,setPrice] = useState(0)
     const [curr_code,setCurr_code] = useState('')
     const rows = [
@@ -42,6 +42,7 @@ export const Home =(props)=>{
     }
     useEffect(()=>{
         let data
+        let currency
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
@@ -51,7 +52,12 @@ export const Home =(props)=>{
                     console.log(res.data)
 
                     data = res.data.results[0].components
-                    setAddress({country: data.country,state:data.state,city:data.city,country_code: data.country_code })
+                    currency = res.data.results[0].annotations.currency.iso_code
+                    setAddress({country: data.country,
+                        state:data.state,
+                        city:data.city,
+                        country_code: data.country_code,
+                         })
                     API.weathers(position.coords.latitude,position.coords.longitude).then(res=> {
 
                             setCurrWeather({icon:`http://openweathermap.org/img/wn/${res.data.current.weather[0].icon}@2x.png`,
@@ -64,8 +70,9 @@ export const Home =(props)=>{
 
                             setCurr_code(res.data.currencies[0].code)
 
-                        API.exchange_rate(res.data.currencies[0].code).then(res=>
+                        API.exchange_rate(currency).then(res=>
                         {
+                            console.log(res.data)
                             let keys
                             for(keys in res.data.rates)
                             {
