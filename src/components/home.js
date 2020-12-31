@@ -1,7 +1,5 @@
-import React, {useEffect, useState,Component} from 'react';
-import { Loader } from "@googlemaps/js-api-loader"
+import React, {useEffect, useState} from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-import Geocode from "react-geocode";
 import Paper from '@material-ui/core/Paper';
 import API from "../api-service";
 import Grid from '@material-ui/core/Grid';
@@ -22,11 +20,7 @@ function createData(name, calories, fat, carbs, protein) {
 export const Home =(props)=>{
 
     const isPortrait = useMediaQuery({ query: '(orientation: portrait)' })
-    const containerStyle = {
-        position: 'relative',
-        width: '500px',
-        height: '300px'
-    }
+
     const [lat,setLat]=useState(0)
     const [lng,setLng]=useState(0)
     const [show,setShow]=useState(false)
@@ -40,9 +34,6 @@ export const Home =(props)=>{
     ];
 
     const [forecast,setForecast]=useState([])
-    const latIncrement=()=>{
-        setLat(lat+5)
-    }
     const convert=(time)=>{
         let date = new Date(time*1000);
         let da = date.toDateString();
@@ -51,20 +42,20 @@ export const Home =(props)=>{
     }
     useEffect(()=>{
         let data
-        let forecastvar
+
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
                 setLat(position.coords.latitude)
                 setLng(position.coords.longitude)
                 API.reverseGeocode(position.coords.latitude,position.coords.longitude).then(res=>{
-                    console.log(res.data.data[0])
+
                     data = res.data.data[0]
                     setAddress({country: data.country,state:data.region,city:data.county,country_code: data.country_code })
                     API.weathers(position.coords.latitude,position.coords.longitude).then(res=> {
-                            console.log(res.data)
+
                             setCurrWeather({icon:`http://openweathermap.org/img/wn/${res.data.current.weather[0].icon}@2x.png`,
                             temp:res.data.current.temp})
-                        forecastvar = res.data.daily.slice(0,3)
+
                         setForecast(res.data.daily.slice(0,3))
 
                         })
@@ -111,7 +102,7 @@ export const Home =(props)=>{
                     </Grid>
                     {show&& <Grid item xs={11}>
 
-                        {forecast.map(item => <Paper elevation={3} style={{
+                        {forecast.map(item => <Paper elevation={3} key={item.dt} style={{
                             marginBottom: 10,
                             backgroundColor: "#787878",
                             padding: 10,
@@ -164,7 +155,7 @@ export const Home =(props)=>{
                         </Map>
                     </Grid>
                     <Grid item xs={12}>
-                        <TableContainer component={Paper} style={isPortrait?{marginTop:350,width:'95vw'}:{marginTop:150,width:500}}>
+                        <TableContainer component={Paper} style={isPortrait?{marginTop:350,width:'95vw'}:{marginTop:350,width:500}}>
                             <Table  aria-label="simple table">
                                 <TableHead>
                                     <TableRow>

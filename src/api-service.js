@@ -34,11 +34,7 @@ export default class API {
         return res
     }
     static async exchange_rate(currency_code){
-        const params={
 
-            access_key:'117b8ac21dfc496109ee16072d23ee4c',
-            format:'1'
-        }
         let res = await axios.get(`http://data.fixer.io/api/latest?access_key=117b8ac21dfc496109ee16072d23ee4c&symbols=${currency_code}&format=1`);
         return res
     }
