@@ -11,8 +11,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
+function createData(currency, price, change,color,sign) {
+    return { currency,price,change ,color,sign};
 }
 
 
@@ -26,10 +26,13 @@ export const Home =(props)=>{
     const [show,setShow]=useState(false)
     const [currWeather,setCurrWeather]=useState({temp:'',icon:''})
     const [address,setAddress] = useState({country:'',state:'',city:'',country_code:'',currency_code:''})
-    const [price,setPrice] = useState(0)
+    const [price_usd,setPrice_usd] = useState(0)
+    const [price_eur,setPrice_eur] = useState(0)
     const [curr_code,setCurr_code] = useState('')
+    const [change,setChange] = useState({usd:'',col_usd:'black',eur:'',col_eur:'black'})
     const rows = [
-        createData('EUR'+curr_code, price),
+        createData('EUR-'+curr_code, price_eur,change.eur,change.col_eur),
+        createData('USD-'+curr_code, price_usd,change.usd,change.col_usd),
 
     ];
 
@@ -70,21 +73,38 @@ export const Home =(props)=>{
 
                             setCurr_code(res.data.currencies[0].code)
 
-                        API.exchange_rate(currency).then(res=>
+                        API.exchange_rate_usd(currency).then(res=>
                         {
 
                             let keys
                             for(keys in res.data.rates)
                             {
 
-                                setPrice(res.data.rates[keys])
+                                setPrice_usd(Math.round(res.data.rates[keys]*10000)/10000)
                             }
 
 
                         }
 
 
-                        )})
+                        )
+                            API.exchange_rate_eur(currency).then(res=>
+                        {
+
+                            let keys
+                            for(keys in res.data.rates)
+                            {
+
+                                setPrice_eur(Math.round(res.data.rates[keys]*10000)/10000)
+                            }
+
+
+                        }
+
+
+                        )
+                        API.exchange_rate_day_before(currency).then(res=>{setChange(res
+                            )})})
 
                 }).catch(error=>console.log(error))
 
@@ -174,12 +194,12 @@ export const Home =(props)=>{
                                 </TableHead>
                                 <TableBody>
                                     {rows.map((row) => (
-                                        <TableRow key={row.name}>
+                                        <TableRow key={row.currency}>
                                             <TableCell component="th" scope="row">
-                                                {row.name}
+                                                {row.currency}
                                             </TableCell>
-                                            <TableCell align="right">{row.calories}</TableCell>
-                                            <TableCell align="right">{row.fat}</TableCell>
+                                            <TableCell align="right">{row.price}</TableCell>
+                                            <TableCell align="right" style={{color:row.color}}>{row.change}%</TableCell>
 
                                         </TableRow>
                                     ))}
