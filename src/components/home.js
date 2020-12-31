@@ -97,13 +97,13 @@ export const Home =(props)=>{
             <Grid container justify={'center'}>
                 <Grid item container justify={"center"} xs={12} lg={6}>
                     <Grid item xs={12}>
-                        <h2>{address.city},{address.state}</h2>
+                        {address.city&&<h2>{address.city},{address.state}</h2>}
                     </Grid>
                     <Grid item xs={10} lg={2}>
                         <img src={currWeather.icon}  alt=""/>
                     </Grid>
                     <Grid item xs={10} lg={2}>
-                        <h2>{currWeather.temp-273.15} °C</h2>
+                        {currWeather.temp&&<h2>{Math.round((currWeather.temp - 273.15)*10)/10} °C</h2>}
                     </Grid>
                     <Grid item xs={11}>
                         <Paper elevation={4} onClick={()=>setShow(!show)} style={{padding:5,marginBottom:10,cursor:'pointer'}}><h3>Next Three days forecast</h3></Paper>
@@ -126,7 +126,7 @@ export const Home =(props)=>{
                                          height={60} alt=""/>
                                 </Grid>
                                 <Grid item xs={4}>
-                                    <p>{item.temp.min}/{item.temp.max} °C</p>
+                                    <p>{Math.round((item.temp.min-273.15)*10)/10}<span style={{padding:5}}>/</span>{Math.round((item.temp.max-273.15)*10)/10} °C</p>
                                 </Grid>
                                 <Grid item xs={3}>
                                     <p>{item.weather[0].description}</p>
