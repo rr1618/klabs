@@ -37,15 +37,18 @@ export default class API {
     static async exchange_rate_day_before(currency_code){
         let iso_today,iso_yesterday
         const timeElapsed = Date.now();
-        const today = new Date(timeElapsed)
+        const today = new Date(timeElapsed-864e5)
         iso_today  = today.toISOString().slice(0,10)
-        const yesterday = new Date(timeElapsed- 864e5)
+        const yesterday = new Date(timeElapsed- 2*864e5)
         iso_yesterday  = yesterday.toISOString().slice(0,10)
+        console.log(iso_today,iso_yesterday)
         let res_usd = await axios.get(`https://api.exchangeratesapi.io/history?start_at=${iso_yesterday}&end_at=${iso_today}&base=USD&symbols=${currency_code}`);
         let res_eur = await axios.get(`https://api.exchangeratesapi.io/history?start_at=${iso_yesterday}&end_at=${iso_today}&base=EUR&symbols=${currency_code}`);
+
         let change1,data1,col1='green',sign1='+',diff
         data1 = res_usd.data.rates
-        diff = (data1[Object.keys(data1)[0]].INR -data1[Object.keys(data1)[1]].INR)/data1[Object.keys(data1)[1]].INR
+
+        diff = (data1[iso_today].INR -data1[iso_yesterday].INR)/data1[iso_yesterday].INR
         change1=Math.round(((diff)*100)*100)/100
         if(change1<0)
         {
@@ -56,13 +59,14 @@ export default class API {
         let change2,data2,col2='green',sign2='+',diff2
         data2 = res_eur.data.rates
 
-        diff2 = (data2[Object.keys(data2)[0]].INR -data2[Object.keys(data2)[1]].INR)/data2[Object.keys(data2)[1]].INR
+        diff2 = (data2[iso_today].INR -data2[iso_yesterday].INR)/data2[iso_yesterday].INR
         change2=Math.round(((diff2)*100)*100)/100
         if(change2<0)
         {
             sign2='-'
             col2='red'
         }
+        console.log({usd:change1,sign1:sign1,col_usd:col1,sign2:sign2,eur:change2,col_eur:col2})
 
         return {usd:change1,sign1:sign1,col_usd:col1,sign2:sign2,eur:change2,col_eur:col2}
     }
