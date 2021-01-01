@@ -29,10 +29,10 @@ export const Home =(props)=>{
     const [price_usd,setPrice_usd] = useState(0)
     const [price_eur,setPrice_eur] = useState(0)
     const [curr_code,setCurr_code] = useState('')
-    const [change,setChange] = useState({usd:'',col_usd:'black',eur:'',col_eur:'black'})
+    const [change,setChange] = useState({usd:'',col_usd:'black',eur:'',col_eur:'black',sign_usd:'+',sign_eur:'+'})
     const rows = [
-        createData('EUR-'+curr_code, price_eur,change.eur,change.col_eur),
-        createData('USD-'+curr_code, price_usd,change.usd,change.col_usd),
+        createData('EUR-'+curr_code, price_eur,change.eur,change.col_eur,change.sign_eur),
+        createData('USD-'+curr_code, price_usd,change.usd,change.col_usd,change.sign_usd),
 
     ];
 
@@ -182,7 +182,8 @@ export const Home =(props)=>{
                                                 {row.currency}
                                             </TableCell>
                                             <TableCell align="right">{row.price}</TableCell>
-                                            <TableCell align="right" style={{color:row.color}}>{row.change}%</TableCell>
+                                            {row.change&&<TableCell align="right"
+                                                        style={{color: row.color}}>{row.sign}{row.change}%</TableCell>}
 
                                         </TableRow>
                                     ))}

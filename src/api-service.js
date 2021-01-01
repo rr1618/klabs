@@ -52,7 +52,7 @@ export default class API {
         change1=Math.round(((diff)*100)*100)/100
         if(change1<0)
         {
-            sign1='-'
+            sign1=''
             col1='red'
         }
 
@@ -63,11 +63,11 @@ export default class API {
         change2=Math.round(((diff2)*100)*100)/100
         if(change2<0)
         {
-            sign2='-'
+            sign2=''
             col2='red'
         }
-        console.log({usd:change1,sign1:sign1,col_usd:col1,sign2:sign2,eur:change2,col_eur:col2})
 
-        return {usd:change1,sign1:sign1,col_usd:col1,sign2:sign2,eur:change2,col_eur:col2}
+
+        return {usd:change1,sign_usd:sign1,col_usd:col1,sign_eur:sign2,eur:change2,col_eur:col2}
     }
 }
